@@ -4,7 +4,7 @@ package com.task.system.scheduler;
  * Hello world!
  *
  */
-public class App 
+public class TaskScheduler 
 {
     public static void main( String[] args )
     {
