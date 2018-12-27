@@ -11,25 +11,24 @@ import com.task.services.TaskScheduler;
  */
 public class Main 
 {
-    public static void main( String[] args )
-    {
-        System.out.println( "Hello World!" );
+	public static void main( String[] args )    {
+		System.out.println( "Hello World!" );
 
 		ApplicationContext appContext = 
-				new ClassPathXmlApplicationContext("../BeanLocations.xml");
-		
+				new ClassPathXmlApplicationContext("BeanLocations.xml");
+
+		System.out.println( "taskScheduler.........." );
+
 		TaskScheduler taskScheduler = (TaskScheduler)appContext.getBean("taskScheduler");
-		
+
 		try {
 			taskScheduler.processTasks(null);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-//
-//		ClassLoader classloader = Thread.currentThread().getContextClassLoader();
-//		List<City> cities = csvReader.getAllCities(classloader.getResourceAsStream("test_three.csv"));
-		
-        
-    }
+
+
+
+	}
 }
