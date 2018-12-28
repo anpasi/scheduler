@@ -29,16 +29,14 @@ public class Main
 			System.out.println("result = " + taskScheduler.processTasks(generateTaskList0()));
 			System.out.println("result = " + taskScheduler.processTasks(generateTaskList()));
 			System.out.println("result = " + taskScheduler.processTasks(generateTaskList2()));
-			System.out.println("result = " + taskScheduler.processTasks(generateTaskListCircular()));
+			System.out.println("result = " + taskScheduler.processTasks(generateCyclicTaskList()));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
 	public static List<Task> generateTaskList0(){
-
 		List<Task> list = new ArrayList<Task>();
-
 		Task task = new Task("A", "B");
 		list.add(task);
 		return list;
@@ -79,7 +77,7 @@ public class Main
 		return list;
 	}
 	
-	public static List<Task> generateTaskListCircular(){
+	public static List<Task> generateCyclicTaskList(){
 
 		List<Task> list = new ArrayList<Task>();
 
