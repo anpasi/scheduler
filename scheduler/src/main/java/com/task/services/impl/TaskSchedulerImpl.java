@@ -9,7 +9,6 @@ import org.springframework.util.CollectionUtils;
 import com.task.dtos.Task;
 import com.task.services.TaskScheduler;
 
-
 @Service("taskScheduler")
 public class TaskSchedulerImpl implements TaskScheduler {
 	
@@ -18,31 +17,36 @@ public class TaskSchedulerImpl implements TaskScheduler {
 		if (CollectionUtils.isEmpty(tasks)) {
 			return "";
 		}
-		LinkedList<String> linkedlist = new LinkedList<String>();
-		LinkedList<String> dependecies = new LinkedList<String>();
+		LinkedList<String> taskOrderList = new LinkedList<String>();
+		LinkedList<String> dependencyList = new LinkedList<String>();
 		
 		for (Task task: tasks) {
 			if (task.getDependency()!=null) {
-				if (dependecies.isEmpty()) {
-					dependecies.add(task.getIdTask());
+				if (dependencyList.isEmpty()) {
+					dependencyList.add(task.getIdTask());
 				}
-				dependecies.addFirst(task.getDependency());
-				addDependencyTaskToList(task.getIdTask(), task.getDependency(), linkedlist);
+				dependencyList.addFirst(task.getDependency());
+				addDependencyTaskToList(task.getIdTask(), task.getDependency(), taskOrderList);
 			} else {
-				if (!linkedlist.contains(task.getIdTask())) {
-					linkedlist.addLast(task.getIdTask());
+				if (!taskOrderList.contains(task.getIdTask())) {
+					taskOrderList.addLast(task.getIdTask());
 				}
 			}
 			
-			if (dependecies.size()>1 && dependecies.getFirst().equals(dependecies.getLast())){
+			if (dependencyList.size()>1 && dependencyList.getFirst().equals(dependencyList.getLast())){
 				throw new Exception("Error - this is a cyclic dependency");
 			}
 		}
 		
-		
-		return linkedlist.toString();
+		return taskOrderList.toString();
 	}
 	
+	/**
+	 * Adds the task to the execution list in the right order according to the dependency
+	 * @param idTask the task to add
+	 * @param dependencyTask the id of the dependency task
+	 * @param linkedlist the list with the task
+	 */
 	private void addDependencyTaskToList(String idTask, String dependencyTask, LinkedList<String> linkedlist) {
 		
 		if (linkedlist.isEmpty()) {
